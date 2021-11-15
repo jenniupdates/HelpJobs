@@ -1,0 +1,50 @@
+<style>
+td{
+  padding:2px;
+}
+</style>
+
+<b style="font-size:40px;"><i>Welcome to HelpJobs!</i></b>
+
+<img src="data/joblogo2.png" style="width:70%;margin-bottom:4px;"><br>
+
+HelpJobs is a Shiny Application which aims to help you job hunters <b><i>better understand Singapore's job market more comprehensively</i></b>. It allows for easier visualization of the job market scene, and includes <b>features</b> such as:
+<ul>
+<li> Finding out the most popular skills companies look for in individuals </li>
+<li> Comparing the salary distribution between various industries </li>
+<li> Job demand and cycle effects </li>
+<li> Universities and their respective salaries </li>
+</ul>
+and so much more!<br>
+Whether you're a fresh grad looking for a job, someone looking to make a career switch or someone trying to plan their education and career, HelpJobs has something for you!
+<br>
+
+<p><b> Data Sources: </b></p>
+<a href="https://www.mycareersfuture.gov.sg/">Web Scraped from MyCareersFuture Job Portal</a>
+<table border='1'>
+<tr>
+  <td>Company</td>
+  <td>Job Category (Industry)</td>
+  <td>Minimum Salary</td>
+  <td>Max Salary</td>
+  <td>Adjusted Salary</td>
+  <td>Created At (Date of Job posting)</td>
+  <td>Skills</td>
+  <td>Latitude</td>
+  <td>Longitude</td>
+</tr>
+</table>
+<li> Data from 2020 - current </li>
+<br>
+<a href="https://data.gov.sg/dataset/graduate-employment-survey-ntu-nus-sit-smu-suss-sutd">GES Survey Data</a> - from data.gov.sg
+<table border='1'>
+<tr>
+  <td>Year</td>
+  <td>University</td>
+  <td>School</td>
+  <td>Degree</td>
+  <td>Employment Rate</td>
+  <td>Basic Monthly Mean</td>
+</tr>
+</table>
+<li> Data from 2013 - 2018 </li>

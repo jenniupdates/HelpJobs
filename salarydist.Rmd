@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Salary Distributions by Industry</b>
+
+The boxplots below show you the overall spread of the salaries offered in the industries you are looking at. Use this to gauge what your expected salary is or to ask for a raise ;)
+Select the industries you are interested in below and watch the plot get generated automatically.
+<br>

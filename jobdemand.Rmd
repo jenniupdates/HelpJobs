@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Job Demand across Months</b>
+
+This bar graph shows the <b>job demand across the various months of the year</b>. Use this to guide you to plan when to send in your applications, as you now know when demand is going to spike! 
+Use the slider to narrow your search to how many month you are interested in :)
+<br>

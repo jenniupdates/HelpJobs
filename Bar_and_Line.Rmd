@@ -1,0 +1,202 @@
+---
+title: "Untitled"
+author: "Lim Yin Shan"
+date: "3/31/2021"
+output: html_document
+---
+
+```{r}
+rrr = c( 'dplyr', 'tidyverse', 'heatmaply', 'gridExtra', "RColorBrewer", 'highcharter', 'plotly', 'data.table', 'tidyr', 'DT')
+
+for(p in rrr){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+options(highcharter.theme = hc_theme_smpl(tooltip = list(valueDecimals = 2)))
+```
+
+
+```{r}
+data = read_csv('data/MyCareersFuture_03_25_2021.csv')
+```
+```{r}
+# date_counts = table(data$`Created At`)
+# head(date_counts)
+# 
+# ```
+# ```{r}
+# colnames(date_counts) <- c('Count')
+# head(date_counts)
+# ```
+# ```{r}
+# df <- cbind(newColName = rownames(date_counts), date_counts)
+# rownames(df) <- 1:nrow(df)
+# head(df)
+# ```
+# 
+# ```{r}
+# name <- c('Date', 'Count')
+# colnames(df) <- name
+# head(df)
+# ```
+# 
+# ```{r}
+# df2 <- as.data.frame(t(df))
+# head(df2)
+# 
+# ```
+# ```{r}
+# df3 = data.frame(t(sapply(df2,c)))
+# name <- c('Date', 'Count')
+# colnames(df3) <- name
+# head(df3)
+# ```
+# 
+# ```{r}
+# # df4 = unlist(strsplit(df3$Date, split=' ', fixed=TRUE))[1]
+# # head(df4)
+# #library(stringr)
+# #str_split_fixed(df3$Date, " ", 2)
+# #typeof(df3)
+# library(data.table) ## v 1.9.6+ 
+# setDT(df4)[, paste0("Date", 1:2) := tstrsplit(Date, " ")]
+# head(df4)
+# ```
+# ```{r}
+# head(data)
+```
+
+
+```{r}
+df2 <- data %>%
+  mutate(month = format(`Created At`, "%m"), year = format(`Created At`, "%Y")) %>%
+  group_by(month, year) %>%
+  count(month)
+
+colnames(df2)[1] <- "Month"
+colnames(df2)[2] <- "Year"
+colnames(df2)[3] <- "Count"
+
+df2$MonthYear <- paste(df2$Month, df2$Year)
+
+df2 <- df2[,c("MonthYear","Count")]
+```
+
+```{r}
+head(df2)
+```
+```{r}
+ggplot(df2, aes(x = MonthYear, y = Count)) + geom_col()
+```
+```{r}
+boxxx <- df2 %>%
+  hchart('column', hcaes(x = MonthYear, y = Count))
+boxxx
+```
+
+
+```{r}
+ggplot(df2, aes(x = MonthYear, y = Count)) + geom_line()
+
+```
+```{r}
+# require(reshape)
+# df3 = with(df2, cbind(df2['Count'], reshape::colsplit(df2$MonthYear, split = "\\ ", names = c('Month', 'Year'))))
+df3 = tidyr::separate(df2, MonthYear, into = c("Month", "Year"))
+head(df3)
+```
+```{r}
+# df4 = df3[order(df3$Year),]
+# df4 = df4[order(df4$Month),]
+
+df4 = df3[
+  with(df3, order(df3$Year, df3$Month)),
+]
+head(df4)
+```
+```{r}
+ggplot(df4, aes(x = Year, y = Count, fill = Month)) + geom_col()
+
+```
+```{r}
+dplyr::count(df4, Month, sort = TRUE)
+```
+
+```{r}
+ggplot(df4, aes(x = Year, y = Count)) + geom_line()
+```
+```{r}
+df5 <- data %>%
+  mutate(month = format(`Created At`, "%m"), year = format(`Created At`, "%Y")) %>%
+  group_by(month, year) %>%
+  count(month)
+
+colnames(df5)[1] <- "Year"
+colnames(df5)[2] <- "Month"
+colnames(df5)[3] <- "Count"
+
+df5$MonthYear <- paste(df5$Month, df5$Year)
+
+df5 <- df5[,c("MonthYear","Count")]
+names <- c('YearMonth', 'Count')
+colnames(df5) <- names
+df5 = df5[
+  with(df5, order(df5$YearMonth)),
+]
+head(df5)
+```
+```{r}
+# sorted bar chart
+boxxx <- df5 %>%
+  hchart('column', hcaes(x = YearMonth, y = Count))
+boxxx
+```
+
+
+```{r}
+ggplot(df5, aes(x = YearMonth, y = Count, group = 1)) +  geom_line()
+```
+
+```{r}
+head(data)
+```
+```{r}
+columns <- names(data)
+columns[8] <- 'Created_At'
+colnames(data) <- columns
+head(data)
+```
+```{r}
+ff = tidyr::separate(data, Created_At, into = c("Date", "Time"), sep='\\ ')
+head(ff)
+```
+```{r}
+fff <- ff %>%
+  group_by(Date) %>%
+  count(Date)
+
+colnames(fff)[2] <- "Count"
+head(fff)
+
+```
+```{r}
+#ggplot(fff, aes(x = Date, y = Count, group = 1)) +  geom_line()
+ffff <- fff %>% hchart(
+  'line', hcaes(x = Date, y = Count),
+  color = "steelblue"
+  )
+ffff
+```
+```{r}
+fffff <- fff %>%
+  arrange(Count) %>%
+  plot_ly(x = ~Date, y = ~Count)
+fffff
+```
+
+```{r}
+datatable(data, class = 'cell-border stripe')
+```
+

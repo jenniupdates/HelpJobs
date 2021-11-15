@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Job Locations Around Singapore</b>
+
+With the map visualization below, you can find out where the jobs are in Singapore, for the industry you are interested in. 
+Select from the list of industries and find out where your job offers are concentrated. Zoom into the map for a more detailed look at where the jobs lie.
+<br>

@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Job Data Explorer</b>
+
+The interactive table provides details on job openings, in a simple to use, accessible format.
+Key in a search term to find jobs that match. Use the sort functions to help you easily find what youre looking for and modify the entries to show to scope down the results!
+<br>

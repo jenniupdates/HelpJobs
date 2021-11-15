@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Salary vs University (Chosen Degree)</b>
+
+The bar graph helps you a compare a selected degree's salary against that of the average from 6 different universities</b>. 
+In the input fields, key in the school and degree you want to compare :)
+<br>

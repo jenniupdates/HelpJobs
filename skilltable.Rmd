@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Skills Data Explorer</b>
+
+The interactive table provides you details on the popularity of skills, in a simple to use, accessible format.
+Key in a search term to find skills that match. Use the sort functions to help you easily find what youre looking for and modify the entries to show to scope down the results!
+<br>

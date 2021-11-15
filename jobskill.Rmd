@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Skills Distribution by Job Count</b>
+
+Use this line graph to help you see what are the skills employers are looking for in their hires!
+Select from the modes to view 3 preset groups of skills or select skills that you want to compare and change the mode to "Display chosen skill" :)
+<br>

@@ -1,0 +1,154 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Debug
+```{r}
+packages = c( 'formattable', 'ggplot2', 'tidyverse', 'dplyr', 'sf', 'packrat', 'rsconnect', 'shiny')
+
+for(p in packages){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+
+```
+
+```{r}
+latest_data = read_csv('data\\MyCareersFuture_04_04_2021.csv')
+ges_data = read_csv('data\\graduate-employment-survey-ntu-nus-sit-smu-suss-sutd.csv')
+```
+```{r}
+skills = read_csv('data\\Skills.csv')
+skills = skills[order(-skills$Count),]
+```
+```{r}
+unlist(skills$Skill)
+```
+
+```{r}
+skills_df <- skills %>%
+  filter(Skill != "Job Descriptions") %>%
+  filter(Skill != "equipment") %>%
+  filter(Skill != "designed") %>%
+  filter(Skill != "system")
+```
+
+```{r}
+  JobsNumbersFinderDF <-reactive({
+    JobsNumbersFinderDF <- skills %>%
+      filter(Skills == input$Skills)
+  })
+```
+
+```{r}
+df <- data.frame(ges_data)
+df$gross_monthly_mean <- as.numeric(as.character(df$gross_monthly_mean))
+df$gross_monthly_median <- as.numeric(as.character(df$gross_monthly_median))
+
+remove_na_df <- na.omit(df) 
+remove_na_df
+
+ges_mutated <- subset(remove_na_df[,c('year', 'university', 'degree', 'gross_monthly_mean', 'gross_monthly_median')])  %>%
+  group_by(degree, university) %>%
+  summarise_at(.vars = vars(gross_monthly_mean, gross_monthly_median),
+             .funs = c(mean="mean"))
+
+ges_mutated <- data.frame(ges_mutated)
+```
+```{r}
+chosen_degree = subset(ges_mutated, ges_mutated$degree == 'Accountancy' & ges_mutated$university == 'Singapore Management University')
+
+new_df <- subset(ges_mutated[,c('university', 'gross_monthly_mean_mean', 'gross_monthly_median_mean')]) %>% 
+  group_by(university) %>%
+  summarise_at(.vars = vars(gross_monthly_mean_mean, gross_monthly_median_mean),
+             .funs = c(mean="mean"))
+
+new_df <- data.frame(new_df)
+
+new_df <- new_df %>%
+  add_row(university = "Chosen Degree", gross_monthly_mean_mean_mean = chosen_degree$gross_monthly_mean_mean, gross_monthly_median_mean_mean = chosen_degree$gross_monthly_mean_mean)
+
+new_df$university <- ifelse(new_df$university == "Singapore Management University", "SMU", 
+                            ifelse(new_df$university == "Singapore Institute of Technology", "SIT",
+                                   ifelse(new_df$university == "Singapore University of Social Sciences", "SUSS",
+                                          ifelse(new_df$university == "Singapore University of Technology and Design", "SUTD",
+                                                 ifelse(new_df$university == "National University of Singapore", "NUS",
+                                                        ifelse(new_df$university == "Nanyang Technological University", "NTU", "Chosen Degree"))))))
+```
+
+```{r}
+new_df$gross_monthly_mean_mean_mean <- as.numeric(as.character(new_df$gross_monthly_mean_mean_mean))
+new_df$gross_monthly_median_mean_mean <- as.numeric(as.character(new_df$gross_monthly_median_mean_mean))
+
+check_sum <- subset(new_df, new_df$university == 'Chosen Degree')
+ggplot(new_df, aes(y=gross_monthly_median_mean_mean, x=reorder(university, gross_monthly_median_mean_mean), fill=university)) + geom_bar(stat="identity") + xlab('Universities vs GDP Per Capita') + ylab('Gross Median Anual Salary in $') + theme_classic() + guides(fill=guide_legend(title='Universities vs GDP Per Capita')) + labs(title = "University Annual Median Salary vs GDP Per Capita [Singapore 2017]",
+caption = "Data Source: Data.gov.sg") + theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+```{r fig.width=20, fig.height=20}
+ggplot(data=head(skills_df,15), aes(x=reorder(Skill, Count), y=Count)) + geom_bar(stat="identity") + theme_classic()
+```
+
+
+```{r}
+df <- latest_data %>%
+  group_by(`Job Category`) %>%
+  summarise(count = n())
+```
+```{r}
+df <- latest_data %>%
+  group_by(`Skills`) %>%
+  summarise(count = n())
+```
+
+
+```{r}
+df <- latest_data %>%
+  group_by(`Job Category`) %>%
+  summarise(mean(`Adjusted Salary`))
+
+colnames(df)[1] = "JobCategory"
+colnames(df)[2] = "AdjSalary"
+```
+```{r}
+df2 <- latest_data %>%
+  mutate(month = format(`Created At`, "%m"), year = format(`Created At`, "%Y")) %>%
+  group_by(month, year) %>%
+  count(month)
+
+colnames(df2)[1] <- "Month"
+colnames(df2)[2] <- "Year"
+colnames(df2)[3] <- "Count"
+
+df2$MonthYear <- paste(df2$Month, df2$Year)
+
+df2 <- df2[,c("MonthYear","Count")]
+```
+
+```{r}
+df3 <- latest_data_glints %>%
+  mutate(month = format(`Last Update`, "%m"), year = format(`Last Update`, "%Y")) %>%
+  group_by(month, year) %>%
+  count(month)
+
+colnames(df3)[1] <- "Month"
+colnames(df3)[2] <- "Year"
+colnames(df3)[3] <- "Count"
+
+df3$MonthYear <- paste(df3$Month, df3$Year)
+
+df3 <- df3[,c("MonthYear","Count")]
+```
+
+```{r}
+ggplot(data=df2, aes(x=reorder(MonthYear, Count), y=Count)) + geom_line(linetype = "dashed") + geom_point() + theme_classic() + theme(axis.text.x = element_text(angle = 40, vjust = 0.5, hjust=1)) + xlab("Month/Year") + ylab("Count of Jobs")
+```
+```{r}
+ggplot(data=df3, aes(x=reorder(MonthYear,Count), y=Count)) + geom_bar(stat="identity") + theme_classic() + theme(axis.text.x = element_text(angle = 40, vjust = 0.5, hjust=1)) + xlab("Month/Year") + ylab("Count of Jobs")
+```
+
+

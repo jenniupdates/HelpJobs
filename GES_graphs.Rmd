@@ -1,0 +1,50 @@
+---
+title: "Untitled"
+author: "Lim Yin Shan"
+date: "4/6/2021"
+output: html_document
+---
+
+```{r}
+rrr = c( 'dplyr', 'tidyverse', 'heatmaply', 'gridExtra', "RColorBrewer", 'highcharter', 'plotly', 'data.table', 'tidyr', 'DT')
+
+for(p in rrr){
+  if(!require(p, character.only = T)){
+    install.packages(p)
+  }
+  library(p, character.only = T)
+}
+options(highcharter.theme = hc_theme_smpl(tooltip = list(valueDecimals = 2)))
+```
+
+```{r}
+data = read.csv('data/ges.csv')
+head(data)
+```
+```{r}
+datatable(data, class='cell-border stripe')
+```
+
+```{r}
+data$basic_monthly_mean <- as.numeric(as.character(data$basic_monthly_mean))
+head(data)
+
+```
+
+
+```{r}
+num_degree <- data %>%
+  group_by(university, degree) %>%
+  summarise_at(vars(basic_monthly_mean), funs(mean(., na.rm=TRUE)))
+
+num_degree <- na.omit(num_degree)
+num_degree
+```
+
+
+```{r}
+num_degree_box <- num_degree %>%
+  hchart('column', hcaes(x = degree, y = basic_monthly_mean))
+num_degree_box
+```
+

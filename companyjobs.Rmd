@@ -1,0 +1,5 @@
+<b style="font-size:24px;">Companies With Most Listings</b>
+
+This bar graph shows the companies which have the most listings on the platform. Find out who are hiring and go get your dream job!
+Use the slider to narrow your search to how many companies you are interested in :)
+<br>
