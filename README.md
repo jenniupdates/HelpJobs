@@ -1,5 +1,6 @@
 # HelpJobs
 a R shiny app that visualises the job market in Singapore. Compares job posting across different job portals, predicted salaries and so much more. Helps undergraduates better understand the market that they would be joining soon.
+- Interested in more details? look into our slides and user manual!
 
 # Steps to see R visualisations
 - Download R app studio
