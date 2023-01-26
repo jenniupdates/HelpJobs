@@ -7,6 +7,6 @@ an R shiny app that visualises the job market in Singapore. Compares job posting
 - Open it
 - Run the app.py file --> it should have a pop-up displaying HelpJob's Dashboard and a navbar to navigate to the other visualisations.
 
-# Current progress:
-- trying to host r shiny app onto AWS
-- online website link: <not done>
+# Limitations
+Dataset is limited to those scrapped during the last scrapped period/timeframe. 
+
