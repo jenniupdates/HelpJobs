@@ -1,5 +1,5 @@
 ## app.R ##
-packages = c('DT', 'ggplot2', 'shinydashboard', 'tidyverse', 'dplyr', 'leaflet', 'packrat', 'rsconnect', 'shiny', 'shinycssloaders', 'shinythemes', 'plotly', 'gridExtra', "RColorBrewer", 'highcharter')
+packages = c('ggplot2','DT','shiny','shinydashboard', 'tidyverse', 'dplyr', 'leaflet', 'packrat', 'rsconnect', 'shinycssloaders', 'shinythemes', 'plotly', 'gridExtra', "RColorBrewer", 'highcharter', 'sass')
 
 for(p in packages){
   if(!require(p, character.only = T)){
