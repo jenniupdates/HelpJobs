@@ -3,9 +3,11 @@ an R shiny app that visualises the job market in Singapore. Compares job posting
 - Interested in knowing more about HelpJobs? Open the folder called *HelpJobs User Guide* ! There are user manual and slides to better understand what our app can do.
 
 # Steps to see R visualisations
-- Download R app studio
-- Open it
-- Run the app.R file --> it should have a pop-up displaying HelpJob's Dashboard and a navbar to navigate to the other visualisations.
+- Download R 
+- Download R app studio and open it
+- Run the app.R file --> it should install the required packages and display a popup containing HelpJob's Dashboard and a navbar to navigate to the other visualisations.
+
+# Sneak Peaks
 
 # Limitations
 Dataset is limited to those scrapped during the last scrapped period/timeframe. 
