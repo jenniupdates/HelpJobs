@@ -8,6 +8,9 @@ an R shiny app that visualises the job market in Singapore. Compares job posting
 - Run the app.R file --> it should install the required packages and display a popup containing HelpJob's Dashboard and a navbar to navigate to the other visualisations.
 
 # Sneak Peaks
+![map visualisation](/images/mapViz.png?raw=true "map visualisation")
+![bar visualisation](/images/barViz.png?raw=true "bar visualisation")
+![table visualisation](/images/tableViz.png?raw=true "table visualisation")
 
 # Limitations
 Dataset is limited to those scrapped during the last scrapped period/timeframe. 
